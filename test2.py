@@ -9,9 +9,7 @@ BASE_URL = "https://stevec.pythonanywhere.com/assignments"
 KEY_URL = f"{BASE_URL}/api-key"
 PASS_URL = f"{BASE_URL}/password"
 
-# ------------------ Helper Functions ------------------
 def sha256sum(filename):
-    """计算文件 SHA256 / Compute file SHA256"""
     h = hashlib.sha256()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
@@ -62,7 +60,6 @@ def get_api_key(student_id, password):
     except Exception as e:
         messagebox.showerror("Error / 错误", f"Get API Key failed / 获取 API 密钥失败:\n{e}")
 
-# ------------------ GUI Actions ------------------
 def browse_file():
     path = filedialog.askopenfilename()
     if path:
@@ -108,11 +105,9 @@ def api_key_action():
 
     threading.Thread(target=get_api_key, args=(sid, pwd), daemon=True).start()
 
-# ------------------ GUI Layout ------------------
 root = tk.Tk()
 root.title("Steve Assignment Helper / 作业助手")
 
-# ======= Password / 改密码 Block =======
 frame_pw = tk.LabelFrame(root, text="Change Password / 修改密码", padx=10, pady=10)
 frame_pw.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
@@ -134,7 +129,6 @@ entry_new_pw_repeat.grid(row=3, column=1)
 
 tk.Button(frame_pw, text="Change Password / 修改密码", command=change_password_action).grid(row=4, column=0, columnspan=2, pady=5)
 
-# ======= Submission / 提交作业 Block =======
 frame_submit = tk.LabelFrame(root, text="Submit Assignment / 提交作业", padx=10, pady=10)
 frame_submit.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
