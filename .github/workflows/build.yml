@@ -3,7 +3,11 @@ name: Auto Build & Release on Push
 on:
   push:
     branches:
-      - master   # 只要 push 到 master 分支就触发
+      - master  # 只要 push 到 master 分支就触发
+
+permissions:
+  contents: write   # ✅ 关键：允许创建 release
+  id-token: write
 
 jobs:
   build:
@@ -30,7 +34,7 @@ jobs:
         run: |
           pyinstaller "Dumbass Submitter.py" --onefile --name "DumbassSubmitter"
 
-      # 🧩 根据操作系统不同改名并收集输出
+      # ✅ 重命名产物
       - name: Rename output (Linux/macOS)
         if: runner.os != 'Windows'
         run: |
@@ -59,6 +63,8 @@ jobs:
     name: Create Release
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # ✅ release 任务也显式声明权限
 
     steps:
       - name: Download all build artifacts
@@ -69,9 +75,15 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Auto Release ${{ github.run_number }}"
+          name: "自动构建版 - ${{ github.run_number }}"
           tag_name: "build-${{ github.run_number }}"
-          body: "自动构建于 ${{ github.event.head_commit.timestamp }} by ${{ github.actor }}"
+          body: |
+            ✅ 自动构建完成于：${{ github.event.head_commit.timestamp }}
+            👤 提交者：${{ github.actor }}
+            📦 包含以下平台：
+            - Windows (.exe)
+            - macOS
+            - Linux
           files: release_files/**/*
           draft: false
           prerelease: false
