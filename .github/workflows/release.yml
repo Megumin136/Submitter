@@ -1,18 +1,15 @@
-name: Build and Release Dumbass Submitter
+name: Build and Release EXE
 
-# 触发：push tag（如 v1.0.0）或手动触发
+permissions:
+  contents: write  # ✅ 必须添加，才能上传 release 资源
+
 on:
   push:
     tags:
-      - 'v*.*.*'
-  workflow_dispatch:
-
-# 预设权限（保证 actions 能创建 release）
-permissions:
-  contents: write
+      - 'v*.*.*'  # 例如 v1.0.0 会触发
 
 jobs:
-  build-exe:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -22,34 +19,31 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install pyinstaller requests
 
-      - name: Build exe with PyInstaller
+      - name: Build EXE with PyInstaller
         run: |
-          # 若脚本名有空格需用引号
-          pyinstaller --onefile --windowed --name "DumbassSubmitter" "Dumbass Submitter.py"
+          pyinstaller --onefile "Dumbass Submitter.py" --name "DumbassSubmitter"
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 内置 token
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            Automated release for ${{ github.ref_name }}.
-            Built with PyInstaller on Windows runner.
+          release_name: "Release ${{ github.ref_name }}"
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload exe to Release
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/DumbassSubmitter.exe
