@@ -107,7 +107,7 @@ def api_key_action():
     threading.Thread(target=get_api_key, args=(sid, pwd), daemon=True).start()
 
 root = tk.Tk()
-root.title("Steve Assignment Helper / 作业助手")
+root.title("Steve Assignment Submitter / 作业提交器")
 
 frame_pw = tk.LabelFrame(root, text="Change Password / 修改密码", padx=10, pady=10)
 frame_pw.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
