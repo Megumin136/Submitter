@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$/../../../../Assignment-Submitter">
       <excludeFolder url="file://$MODULE_DIR$/../../../../Assignment-Submitter/.venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.13 (dsml2-02-22)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (lab001)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

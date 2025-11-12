@@ -10,7 +10,6 @@ KEY_URL = f"{BASE_URL}/api-key"
 PASS_URL = f"{BASE_URL}/password"
 
 def sha256sum(filename):
-    """计算文件 SHA256 / Compute file SHA256"""
     h = hashlib.sha256()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
