@@ -37,19 +37,19 @@ jobs:
         if: runner.os == 'Windows'
         shell: cmd
         run: |
-          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-windows.ico --name "DumbassSubmitter"
+          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-windows.ico --name "AssignmentSubmitter"
 
       - name: Build executable (macOS)
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-macos.icns --name "DumbassSubmitter"
+          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-macos.icns --name "AssignmentSubmitter"
 
       - name: Build executable (Linux)
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-linux.png --name "DumbassSubmitter"
+          pyinstaller "AssignmentSubmitter.py" --onefile --windowed --icon=icon/icon-linux.png --name "AssignmentSubmitter"
 
       # -----------------------------
       # 🚚 Rename outputs
